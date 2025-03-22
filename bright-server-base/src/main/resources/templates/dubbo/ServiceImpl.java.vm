@@ -1,0 +1,27 @@
+package ${package.ServiceImpl};
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tml.common.base.service.impl.BaseServiceImpl;
+import ${package.Mapper}.${table.mapperName};
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * $!{table.comment} 服务实现类
+ *
+ * @author ${author}
+ * @date  ${datetime}
+ */
+@Slf4j
+@DubboService
+@Transactional(rollbackFor = Exception.class)
+public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+
+}

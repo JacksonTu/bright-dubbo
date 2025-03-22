@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tml.server.base.system.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseCommonResult" type="com.tml.api.base.system.entity.SysUser">
+        <result column="id" property="id"/>
+        <result column="login_name" property="loginName"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="user_type" property="userType"/>
+        <result column="status" property="status"/>
+        <result column="expired" property="expired"/>
+        <result column="enterprise_id" property="enterpriseId"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="job_id" property="jobId"/>
+        <result column="is_leader" property="isLeader"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+    </resultMap>
+
+    <resultMap id="UserVoCommonResult" type="com.tml.api.base.system.vo.UserVo">
+        <result column="id" property="id"/>
+        <result column="login_name" property="loginName"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="user_type" property="userType"/>
+        <result column="status" property="status"/>
+        <result column="expired" property="expired"/>
+        <result column="enterprise_id" property="enterpriseId"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="job_id" property="jobId"/>
+        <result column="is_leader" property="isLeader"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="enterpriseName" property="enterpriseName"/>
+        <result column="departmentName" property="departmentName"/>
+        <result column="jobName" property="jobName"/>
+        <result column="rolesList" property="rolesList"/>
+    </resultMap>
+
+    <!-- 多表页面信息查询 -->
+    <select id="pageList" resultMap="UserVoCommonResult">
+        SELECT DISTINCT
+        t.id,
+        t.login_name,
+        t.`name`,
+        t.sex,
+        t.phone,
+        t.email,
+        t.user_type,
+        t.`status`,
+        t.expired,
+        t.enterprise_id,
+        t.department_id,
+        t.job_id,
+        t.is_leader,
+        t.create_time,
+        t.update_time,
+        t.create_user_id,
+        t4.enterprise_name AS enterpriseName,
+        t5.department_name AS departmentName,
+        t6.job_name AS jobName,
+        group_concat(t3.`name`) AS rolesList
+        FROM
+        t_sys_user t
+        LEFT JOIN t_sys_user_role t2 ON t.id = t2.user_id
+        LEFT JOIN t_sys_role t3 ON t2.role_id = t3.id
+        LEFT JOIN t_enterprise t4 ON t.enterprise_id = t4.id
+        LEFT JOIN t_enterprise_department t5 ON t.department_id = t5.id
+        LEFT JOIN t_enterprise_job t6 ON t.job_id = t6.id
+        <where>
+            <if test=" ew.id != null and ew.id !=''">
+                t.id = #{ew.id}
+            </if>
+            <if test="ew.name != null and ew.name != '' ">
+                t.login_name like concat('%',#{ew.name},'%')
+                or t.name like concat('%',#{ew.name},'%')
+            </if>
+            <if test=" ew.enterpriseId != null and ew.enterpriseId !=''">
+                and t.enterprise_id = #{ew.enterpriseId}
+            </if>
+            <if test="ew.departmentId != null and ew.departmentId !=''">
+                and t.department_id= #{ew.departmentId}
+            </if>
+            <if test=" ew.startTime != null and params.starTime !='' and ew.endTime !=null and ew.endTime!=''">
+                and (t.create_time between concat(#{ew.startTime},'00:00:00') and
+                concat(#{ew.endTime},"00:00:00"))
+            </if>
+            <if test=" ew.createUserId != null and ew.createUserId !=''">
+                or t.create_user_id = #{ew.createUserId}
+            </if>
+        </where>
+        GROUP BY t.id
+    </select>
+
+    <select id="selectByLoginName" resultMap="BaseCommonResult" parameterType="java.lang.String">
+        SELECT
+        t.id,
+        t.login_name,
+        t.`name`,
+        t.`password`,
+        t.salt,
+        t.sex,
+        t.phone,
+        t.email,
+        t.user_type,
+        t.`status`,
+        t.expired,
+        t.enterprise_id,
+        t.department_id,
+        t.job_id,
+        t.is_leader,
+        t.create_time,
+        t.update_time,
+        t.create_user_id
+        FROM
+        t_sys_user t
+        <where>
+            t.login_name=#{loginName}
+        </where>
+    </select>
+
+    <!-- 查询用户的所有菜单ID -->
+    <select id="selectResourceIdListByUserId" resultType="long">
+        SELECT DISTINCT rm.resource_id
+        FROM t_sys_user_role ur
+                 LEFT JOIN t_sys_role_resource rm ON ur.role_id = rm.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <!-- 查询用户的所有权限 -->
+    <select id="selectPerms" resultType="string">
+        SELECT m.url
+        FROM t_sys_user_role ur
+                 LEFT JOIN t_sys_role_resource rm ON ur.role_id = rm.role_id
+                 LEFT JOIN t_sys_resource m ON rm.resource_id = m.id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <!-- 查询用户的角色 -->
+    <select id="selectRoles" resultType="string">
+        select t2.name
+        from t_sys_user_role t
+                 INNER JOIN t_sys_role t2 on t.role_id = t2.id
+        where t.user_id = #{userId}
+    </select>
+</mapper>

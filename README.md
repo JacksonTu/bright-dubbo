@@ -1,6 +1,6 @@
-#### hdw-dubbo
-+ hdw-dubbo微服务开发平台，具有统一授权、认证后台管理系统，其中包含具备用户管理、资源权限管理等多个模块，支持多业务系统并行开发，可以作为后端服务的开发脚手架。代码简洁，架构清晰，适合学习和直接项目中使用。
-+ 核心技术采用SpringBoot、Dubbo、Mybatis、Mybatis-plus、Druid、Redis、ActiveMQ、Quartz、JWT Token等主要框架和中间件。前端采用vue-element-ui组件。
+#### bright-dubbo
++ bright-bright微服务开发平台，具有统一授权、认证后台管理系统，其中包含具备用户管理、资源权限管理等多个模块，支持多业务系统并行开发，可以作为后端服务的开发脚手架。代码简洁，架构清晰，适合学习和直接项目中使用。
++ 核心技术采用SpringBoot、Dubbo、Mybatis、Mybatis-plus、Druid、Redis、Quartz、Sa-Token等主要框架和中间件。前端采用vue-element-ui组件。
 + 前后端分离，通过token进行数据交互，可独立部署
 + 灵活的权限控制，可控制到页面或按钮，满足绝大部分的权限需求
 + 页面交互使用Vue2.x，极大的提高了开发效率
@@ -15,57 +15,47 @@
 
 #### 项目地址
 
- 平台  | hdw-dubbo（后端） |hdw-dubbo-ui（前端）
+ 平台  | bright-dubbo（后端） |bright-dubbo-ui（前端）
 ---|---|---
-GitHub | [https://github.com/JacksonTu/hdw-dubbo](https://github.com/JacksonTu/hdw-dubbo) |[https://github.com/JacksonTu/hdw-dubbo-ui](https://github.com/JacksonTu/hdw-dubbo-ui)
-Gitee  | [https://gitee.com/tumao2/hdw-dubbo](https://gitee.com/tumao2/hdw-dubbo) |[https://gitee.com/tumao2/hdw-dubbo-ui](https://gitee.com/tumao2/hdw-dubbo-ui)
+GitHub | [https://github.com/JacksonTu/bright-dubbo](https://github.com/JacksonTu/bright-dubbo) |[https://github.com/JacksonTu/bright-dubbo-ui](https://github.com/JacksonTu/bright-dubbo-ui)
+Gitee  | [https://gitee.com/tumao2/bright-dubbo](https://gitee.com/tumao2/bright-dubbo) |[https://gitee.com/tumao2/bright-dubbo-ui](https://gitee.com/tumao2/bright-dubbo-ui)
 
 
 
 
 #### 代码结构
 ``` lua
-hdw-dubbo
-├── docker                             -- docker脚本文件
-    ├── server-base                        -- hdw-server-base脚本
-    ├── server-notice                      -- hdw-server-notice脚本
-    ├── web-base                           -- hdw-base-web脚本
-
+bright-dubbo
 ├── docs                               -- 文档及脚本
-    ├── config                         -- dubbo控制台
     ├── img                            -- 系统图片截图  
     ├── sql                            -- sql文件  
      
-├── hdw-common                        -- 通用模块
-    ├── hdw-common-core                        -- 系统核心包
-    ├── hdw-common-starter-datasource          -- 系统数据库自动装配starter  
-    ├── hdw-common-starter-redis               -- 系统redis自动装配starter
-    ├── hdw-common-starter-redisson            -- 系统redisson自动装配starter
-	├── hdw-common-starter-activemq            -- 系统activemq自动装配starter
-├── hdw-api-base                      -- 基础服务接口
-├── hdw-server-base                   -- 基础服务提供者服务器[port = 8181]
-├── hdw-api-notice                    -- 系统消息服务接口
-├── hdw-server-notice                 -- 系统消息服务提供者服务器[port = 8182]
-├── hdw-web-base                      -- 服务消费者服务器[port = 8190]
-├── hdw-monitor                       -- SpringBootAdmin监控服务[port = 8180]
+├── bright-common                        -- 通用模块
+    ├── bright-common-core                        -- 系统核心包
+    ├── bright-common-starter-datasource          -- 系统数据库自动装配starter  
+    ├── bright-common-starter-redis               -- 系统redis自动装配starter
+├── bright-api-base                      -- 基础服务接口
+├── bright-server-base                   -- 基础服务提供者服务器[port = 8181]
+├── bright-api-notice                    -- 系统消息服务接口
+├── bright-server-notice                 -- 系统消息服务提供者服务器[port = 8182]
+├── bright-web-base                      -- 服务消费者服务器[port = 8190]
+├── bright-monitor                       -- SpringBootAdmin监控服务[port = 8180]
 ```
 
 
 #### 快速开始
 
 1. 准备环境
-    + Java1.8  (v1.8.0_131+)
-    + Nacos服务发现和注册中心(v1.4.2+)<a href="https://github.com/alibaba/nacos/releases/download/2.0.3/nacos-server-2.0.3.zip">下载地址</a>
+    + Java17
+    + Nacos服务发现和注册中心(v3.4.3+)<a href="https://github.com/alibaba/nacos/releases/download/3.4.3/nacos-server-3.4.3.zip">下载地址</a>
     + Redis (v3.2.100+)
-    + ActiveMQ(v5.15.8+)<a href="http://activemq.apache.org/components/classic/download/" target="_blank">下载地址</a>
-    + RabbitMq (v3.7+)（需安装rabbitmq_delayed_message_exchange插件 <a href="https://www.rabbitmq.com/community-plugins.html" target="_blank">下载地址</a>）
     + Mysql (v5.7.26+)
     + Maven (v3+)
     + Nodejs (v10.16.0+)
    
-2. 执行创建数据库hdw_dubbo并执行sql脚本
+2. 执行创建数据库bright_dubbo并执行sql脚本
    
-    + docs/sql/hdw_dubbo.sql
+    + docs/sql/bright_dubbo.sql
     
 3. 启动Nacos服务发现和注册中心
     +
@@ -101,38 +91,14 @@ hdw-dubbo
 7. 项目打包部署  
      maven多环境打包,并替换相关变量
    ```bush
-      clean install -D profileActive={dev|test|prod} -f pom.xml
+      clean install -D profile.active={dev|test|prod} -f pom.xml
    ```
 
 8. JVM优化
      ```bush  
-        -Xmx256m -Xms256m -Xss1m -Xmn128m -XX:+PrintGCDetails  
+        -Xmx256m -Xms256m -Xmn128m -XX:+UseG1 -Xlog:gc 
      ```
-     
-9. 如果想使用ActiveMQ,需要引入hdw-common-starter-activemq组件 
-   在pom.xml加入
-
-   ```
-       <dependency>
-           <groupId>com.hdw</groupId>
-           <artifactId>hdw-common-starter-redisson</artifactId>
-           <version>${hdw-common.version}</version>
-       </dependency>
-   ```
-   在application-dev.yml、application-prod.yml、application-test.yml中分别加入
-
-   ```
-     activemq:
-       broker-url: tcp://localhost:61616
-       user: admin
-       password: admin
-       in-memory: false
-       pool:
-         enabled: true
-         max-connections: 100
-         idle-timeout: 30s
-   ```
-
+   
 #### 系统预览
 <table>
   <tr>
@@ -154,19 +120,17 @@ hdw-dubbo
 </table>
 
 #### 技术交流
-加入QQ群和大家一起交流吹水：
-
-![qq](docs/images/QQ.png)
 
 #### 开发计划
 
 #### 更新日志
- ##### v3.1.0 
-  + SpringBoot更新到2.5.0
-  + Dubbo更新到2.7.8
+ ##### v3.1.0
+  + 采用Java17
+  + SpringBoot更新到3.4.3
+  + Dubbo更新到3.3.4
+  + 采用Sa-Token替换Shiro
   + 层级调整
   + 优化消息服务
   + 实现服务提供者之间相互调用
   + 实现消费者调用多个服务提供者
-  + hdw-web-base去掉数据库连接
   + 优化前端代码

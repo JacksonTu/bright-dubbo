@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.hdw.common.starter.datasource.configure.MybatisPlusConfigure
-

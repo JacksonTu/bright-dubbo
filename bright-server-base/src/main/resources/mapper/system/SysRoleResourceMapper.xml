@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tml.server.base.system.mapper.SysRoleResourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseCommonResult" type="com.tml.api.base.system.entity.SysRoleResource">
+        <result column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="resource_id" property="resourceId"/>
+        <association property="role" javaType="com.tml.api.base.system.entity.SysRole">
+            <id column="roleId" property="id"/>
+            <result column="roleName" property="name"/>
+        </association>
+        <association property="resource" javaType="com.tml.api.base.system.entity.SysResource">
+            <id column="resourceId" property="id"/>
+            <result column="resourceName" property="name"/>
+        </association>
+    </resultMap>
+
+    <delete id="deleteBatch">
+        delete from t_sys_role_resource where role_id in
+        <foreach item="roleId" collection="array" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </delete>
+
+    <select id="selectResourceList" parameterType="map" resultMap="BaseCommonResult">
+        select
+        t.id,
+        t.role_id,
+        t.resource_id,
+        t2.id AS roleId,
+        t2.name AS roleName,
+        t3.id AS resourceId,
+        t3.name AS resourceName
+        from
+        t_sys_role_resource t
+        inner join t_sys_role t2 on t.role_id=t2.id
+        inner join t_sys_resource t3 on t.resource_id=t3.id
+        <where>
+            <if test="params.id!=null and params.id!=''">
+                t.id=#{params.id}
+            </if>
+            <if test="params.roleId!=null and params.roleId!=''">
+                and t.role_id=#{params.roleId}
+            </if>
+            <if test="params.resourceId!=null and params.resourceId!=''">
+                and t.resource_id=#{params.resourceId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectResourceNodeListByRoleId" resultMap="BaseCommonResult">
+        SELECT t.id,
+               t.role_id,
+               t.resource_id,
+               t2.id     AS roleId,
+               t2.`name` AS roleName,
+               t3.id     AS resourceId,
+               t3.`name` AS resourceName
+        FROM t_sys_role_resource t
+                 INNER JOIN t_sys_role t2 ON t.role_id = t2.id
+                 INNER JOIN t_sys_resource t3 ON t.resource_id = t3.id
+        WHERE t.role_id = #{roleId}
+          AND t3.id NOT IN (SELECT t.parent_id FROM t_sys_resource t WHERE t.role_id = #{roleId})
+    </select>
+</mapper>

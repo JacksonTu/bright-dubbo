@@ -1,0 +1,124 @@
+package ${package.Controller};
+
+import java.util.*;
+
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+
+import com.tml.common.exception.GolbalException;
+import com.tml.common.api.CommonResult;
+import com.tml.common.mybatis.vo.PageVo;
+import com.tml.common.mybatis.dto.CommonDto;
+import com.tml.common.annotation.AutoLog;
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import javax.validation.Valid;
+
+
+
+/**
+ * ${entity}接口
+ *
+ * @author ${author}
+ * @date  ${datetime}
+ */
+@Slf4j
+@Tag(name = "${entity}接口")
+@RestController
+@RequestMapping("${entity}")
+public class ${table.controllerName} {
+   @DubboReference
+    private ${table.serviceName} ${table.entityName}Sevrice;
+    
+    ${entity.entityName}
+
+
+    /**
+     * ${entity}列表
+     *
+     * @return
+     */
+    @AutoLog(value = "${entity}-分页列表查询")
+    @Operation(summary = "${entity}列表")
+    @GetMapping("/list")
+    @SaCheckPermission("/list")
+    public CommonResult<PageVo<${entity}>> treeGrid(CommonDto commonDto) {
+        PageVo<${entity}> page = ${table.entityName}Service.pageList(commonDto);
+        return CommonResult.success(page);
+    }
+
+    /**
+     * 获取${entity}信息
+     */
+    @AutoLog(value = "${entity}-获取${entity}信息")
+    @Operation(summary = "获取${entity}信息")
+    @Parameter(name = "id", description = "主键ID", required = false)
+    @GetMapping("/info/{id}")
+    @SaCheckPermission("/info")
+    public CommonResult<${entity}> info(@PathVariable("id") Long id){
+        ${entity} ${table.entityName} = ${table.entityName}Service.getById(id);
+        return CommonResult.success(${table.entityName});
+    }
+
+    /**
+     * 保存${entity}信息
+     */
+    @AutoLog(value = "${entity}-保存${entity}信息")
+    @Operation(summary = "保存${entity}信息")
+    @PostMapping("/save")
+    @SaCheckPermission("/save")
+    public CommonResult save(@Valid @RequestBody ${entity} ${entity}) {
+        try {
+            ${table.entityName}.setCreateTime(new Date());
+            ${table.entityName}.setUpdateTime(new Date());
+                ${table.entityName}Service.save(${table.entityName});
+            return CommonResult.success("添加成功");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new GolbalException("运行异常，请联系管理员");
+        }
+    }
+
+    /**
+     * 修改${entity}信息
+     */
+    @AutoLog(value = "${entity}-修改${entity}信息")
+    @Operation(summary = "修改${entity}信息")
+    @PostMapping("/update")
+    @SaCheckPermission("/update")
+    public CommonResult update(@Valid @RequestBody ${entity} ${entity}) {
+        try {
+            ${table.entityName}.setUpdateTime(new Date());
+                ${table.entityName}Service.updateById(${table.entityName});
+            return CommonResult.success("修改成功");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new GolbalException("运行异常，请联系管理员");
+        }
+    }
+
+    /**
+     * 删除${entity}信息
+     */
+    @AutoLog(value = "${entity}-删除${entity}信息")
+    @Operation(summary = "删除${entity}信息")
+    @Parameter(name = "ids", description = "ID数组", required = false)
+    @PostMapping("/delete")
+    @SaCheckPermission("/delete")
+    public CommonResult delete(@RequestBody Sting[] ids) {
+        try {
+                ${table.entityName}Service.removeByIds(Arrays.asList(ids));
+            return CommonResult.success("删除成功");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new GolbalException("运行异常，请联系管理员");
+        }
+    }
+}

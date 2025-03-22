@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tml.server.base.enterprise.mapper.EnterpriseJobMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseCommonResult" type="com.tml.api.base.enterprise.entity.EnterpriseJob">
+        <result column="id" property="id"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="job_code" property="jobCode"/>
+        <result column="job_name" property="jobName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="parameter1" property="parameter1"/>
+        <result column="parameter2" property="parameter2"/>
+        <association property="enterpriseDepartment" javaType="com.tml.api.base.enterprise.entity.EnterpriseDepartment">
+            <id column="deptId" property="id"/>
+            <result column="department_name" property="departmentName"/>
+        </association>
+    </resultMap>
+
+    <!-- 多表页面信息查询 -->
+    <select id="pageList" resultType="com.tml.api.base.enterprise.vo.EnterpriseJobVo">
+        SELECT DISTINCT
+        t.id,
+        t.department_id AS departmentId,
+        t.job_code AS jobCode,
+        t.job_name AS jobName,
+        t.create_time AS createTime,
+        t.update_time AS updateTime,
+        t.create_user AS createUser,
+        t.update_user AS updateUser,
+        t.parameter1,
+        t.parameter2,
+        t2.department_name as departmentName,
+        t3.id as enterpriseId,
+        t3.enterprise_name as enterpriseName
+        FROM
+        t_enterprise_job t
+        LEFT JOIN t_enterprise_department t2 on t.department_id=t2.id
+        LEFT JOIN t_enterprise t3 on t2.enterprise_id=t3.id
+        LEFT JOIN t_sys_user t4 on t3.id=t4.enterprise_id
+        LEFT JOIN t_sys_user_enterprise t5 on t4.id=t5.user_id
+        <where>
+            <if test="ew.id!=null and ew.id!=''">
+                t.id=#{ew.id}
+            </if>
+            <if test="ew.jobCode !=null and ew.jobCode!=''">
+                and t.job_code=#{ew.jobCode}
+            </if>
+            <if test="ew.jobName !=null and ew.jobName!=''">
+                and t.job_name like '%${ew.jobName}%'
+            </if>
+            <if test="ew.departmentId !=null and ew.departmentId!=''">
+                and t.department_id=#{ew.departmentId}
+            </if>
+            <if test="ew.enterpriseId !=null and ew.enterpriseId!=''">
+                and t3.id=#{ew.enterpriseId}
+            </if>
+            <if test="ew.userId !=null and ew.userId!=''">
+                and t4.id=#{ew.userId}
+            </if>
+        </where>
+        order by t.job_code
+    </select>
+
+    <!-- 自定义查询 -->
+    <select id="selectEnterpriseJobList" parameterType="map" resultMap="BaseCommonResult">
+        SELECT DISTINCT
+        t.id,
+        t.department_id,
+        t.job_code,
+        t.job_name,
+        t.create_time,
+        t.update_time,
+        t.create_user,
+        t.update_user,
+        t.parameter1,
+        t.parameter2,
+        t2.id as deptId,
+        t2.department_name
+        FROM
+        t_enterprise_job t
+        LEFT JOIN t_enterprise_department t2 on t.department_id=t2.id
+        LEFT JOIN t_enterprise t3 on t2.enterprise_id=t3.id
+        LEFT JOIN t_sys_user t4 on t3.id=t4.enterprise_id
+        LEFT JOIN t_sys_user_enterprise t5 on t4.id=t5.user_id
+        <where>
+            <if test="ew.id!=null and ew.id!=''">
+                t.id=#{ew.id}
+            </if>
+            <if test="ew.jobCode !=null and ew.jobCode!=''">
+                and t.job_code=#{ew.jobCode}
+            </if>
+            <if test="ew.jobName !=null and ew.jobName!=''">
+                and t.job_name like '%${ew.jobName}%'
+            </if>
+            <if test="ew.deptId !=null and ew.deptId!=''">
+                and t.department_id=#{ew.deptId}
+            </if>
+            <if test="ew.enterpriseId !=null and ew.enterpriseId!=''">
+                and t3.id=#{ew.enterpriseId}
+            </if>
+            <if test="ew.userId !=null and ew.userId!=''">
+                and t4.id=#{ew.userId}
+            </if>
+        </where>
+        order by t.create_time desc
+    </select>
+</mapper>

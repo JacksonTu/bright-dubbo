@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.tml</groupId>
+        <artifactId>bright-dubbo</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.tml</groupId>
+    <artifactId>bright-api-base</artifactId>
+    <version>${revision}</version>
+    <packaging>jar</packaging>
+
+    <name>bright-api-base</name>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tml</groupId>
+            <artifactId>bright-common-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+</project>

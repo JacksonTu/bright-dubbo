@@ -1,0 +1,89 @@
+server:
+  port: 8190
+
+spring:
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+      timeout: 3600ms
+      #      cluster:
+      #        max-redirects: 3
+      #        nodes: 127.0.0.1:7000, 127.0.0.1:7001, 127.0.0.1:7002, 127.0.0.1:7003, 127.0.0.1:7004, 127.0.0.1:7005
+      lettuce:
+        pool:
+          max-active: 100
+          max-idle: 100
+          min-idle: 50
+          max-wait: 6000ms
+        shutdown-timeout: 100ms
+
+  mail:
+    host: smtp.exmail.qq.com
+    username: xxxx
+    password: xxxx
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  boot:
+    admin:
+      client:
+        url: http://${NACOS_HOST:@nacos.host@}:8180
+        username: admin
+        password: Bright@2025
+
+dubbo:
+  registry:
+    address: nacos://${NACOS_HOST:@nacos.host@}:${NACOS_PORT:@nacos.port@}?username=${NACOS_USERNAME:@nacos.username@}&password=${NACOS_PASSWORD:@nacos.password@}&namespace=${NACOS_NAMESPACE:@nacos.namespace@}
+    register-mode: instance
+    parameters:
+      register-consumer-url: true
+  protocol:
+    name: tri
+    port: 8191
+  application:
+    name: ${spring.application.name}
+    logger: slf4j
+    qos-enable: false
+    # 序列化检查 STRICT（严格检查）,WARN（告警）,DISABLE（禁用）
+    serialize-check-status: DISABLE
+  consumer:
+    group: bright-dubbo
+    version: 1.0.0
+    timeout: 60000
+    loadbalance: roundrobin
+    retries: 2
+    check: false
+
+
+fastdfs:
+  charset: UTF-8
+  connect-timeout: 5
+  http-secret-key: ''
+  network-timeout: 30
+  http-anti-steal-token: true
+  http-tracker-http-port: 8080
+  connection-pool-max-idle: 20
+  connection-pool-max-total: 20
+  connection-pool-min-idle: 2
+  nginx-servers: http://127.0.0.1:9090
+  tracker-servers: 127.0.0.1:22122
+
+
+bright:
+  # 上传路径配置
+  file-upload-prefix: D:\\opt\\upload
+  # 资源访问全路径前缀：http://localhost:9090
+  resource-access-url: http://localhost:${server.port}${server.servlet.context-path}
+  # 拦截器配置
+  interceptor:
+    upload:
+      enabled: true
+      include-paths: /**
+      allow-file-extensions: gif,jpg,jpeg,bmp,png,jar,doc,docx,xls,xlsx,pdf,txt,rar

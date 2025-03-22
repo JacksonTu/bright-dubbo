@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tml.server.base.system.mapper.SysFileMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseCommonResult" type="com.tml.api.base.system.entity.SysFile">
+        <result column="id" property="id"/>
+        <result column="table_id" property="tableId"/>
+        <result column="record_id" property="recordId"/>
+        <result column="attachment_group" property="attachmentGroup"/>
+        <result column="attachment_name" property="attachmentName"/>
+        <result column="attachment_path" property="attachmentPath"/>
+        <result column="attachment_type" property="attachmentType"/>
+        <result column="save_type" property="saveType"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="is_sync" property="isSync"/>
+    </resultMap>
+
+    <select id="pageList" resultMap="BaseCommonResult">
+        SELECT
+        t.id,
+        t.table_id,
+        t.record_id,
+        t.attachment_group,
+        t.attachment_name,
+        t.attachment_path,
+        t.attachment_type,
+        t.save_type,
+        t.create_time,
+        t.update_time,
+        t.create_user,
+        t.update_user,
+        t.is_sync
+        FROM
+        t_sys_file t
+        <where>
+            <if test="ew.id!=null and ew.id!=''">
+                t.id=#{ew.id}
+            </if>
+            <if test="ew.tableId!=null and ew.tableId!=''">
+                and t.table_id=#{ew.tableId}
+            </if>
+            <if test="ew.recordId!=null and ew.recordId!=''">
+                and t.record_id=#{ew.recordId}
+            </if>
+            <if test="ew.attachmentGroup!=null and ew.attachmentGroup!=''">
+                and t.attachment_group=#{ew.attachmentGroup}
+            </if>
+            <if test="ew.attachmentName!=null and ew.attachmentName!=''">
+                and t.attachment_name=#{ew.attachmentName}
+            </if>
+            <if test="ew.attachmentType!=null and ew.attachmentType!=''">
+                and t.attachment_type=#{ew.attachmentType}
+            </if>
+            <if test="ew.saveType!=null and ew.saveType!=''">
+                and t.save_type=#{ew.saveType}
+            </if>
+        </where>
+        order by t.create_time desc
+    </select>
+
+    <!-- 多表信息查询 -->
+    <select id="selectFileListByTableIdAndRecordId" parameterType="map" resultMap="BaseCommonResult">
+        SELECT
+        t.id,
+        t.table_id,
+        t.record_id,
+        t.attachment_group,
+        t.attachment_name,
+        t.attachment_path,
+        t.attachment_type,
+        t.save_type,
+        t.create_time,
+        t.update_time,
+        t.create_user,
+        t.update_user,
+        t.is_sync
+        FROM
+        t_sys_file t
+        <where>
+            <if test="id!=null and id!=''">
+                t.id=#{id}
+            </if>
+            <if test="tableId!=null and tableId!=''">
+                and t.table_id=#{tableId}
+            </if>
+            <if test="recordId!=null and recordId!=''">
+                and t.record_id=#{recordId}
+            </if>
+            <if test="attachmentGroup!=null and attachmentGroup!=''">
+                and t.attachment_group=#{attachmentGroup}
+            </if>
+            <if test="attachmentName!=null and attachmentName!=''">
+                and t.attachment_name=#{attachmentName}
+            </if>
+            <if test="attachmentType!=null and attachmentType!=''">
+                and t.attachment_type=#{attachmentType}
+            </if>
+            <if test="saveType!=null and saveType!=''">
+                and t.save_type=#{saveType}
+            </if>
+        </where>
+        order by t.create_time desc
+    </select>
+</mapper>

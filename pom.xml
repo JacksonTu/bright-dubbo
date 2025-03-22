@@ -7,61 +7,62 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.3</version>
+        <version>3.4.3</version>
         <relativePath/>
     </parent>
 
-    <groupId>com.hdw</groupId>
-    <artifactId>hdw-dubbo</artifactId>
-    <version>3.1.0</version>
+    <groupId>com.tml</groupId>
+    <artifactId>bright-dubbo</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>hdw-common</module>
-        <module>hdw-api-base</module>
-        <module>hdw-server-base</module>
-        <module>hdw-api-notice</module>
-        <module>hdw-server-notice</module>
-        <module>hdw-web-base</module>
-        <module>hdw-monitor</module>
+        <module>bright-common</module>
+        <module>bright-api-base</module>
+        <module>bright-server-base</module>
+        <module>bright-api-notice</module>
+        <module>bright-server-notice</module>
+        <module>bright-web-base</module>
+        <module>bright-monitor</module>
     </modules>
 
     <properties>
-        <java.version>1.8</java.version>
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <revision>3.1.0</revision>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+        <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
 
-        <spring-boot.version>2.5.3</spring-boot.version>
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
-        <spring-boot-admin.version>2.4.3</spring-boot-admin.version>
-        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-        <alibaba.fastjson.version>1.2.5</alibaba.fastjson.version>
-        <alibaba.druid.version>1.2.6</alibaba.druid.version>
-
-        <apache.commons-fileupload.version>1.4</apache.commons-fileupload.version>
-        <apache.commons-text.version>1.9</apache.commons-text.version>
-        <apache.commons-configuration.version>1.10</apache.commons-configuration.version>
-        <httpclient.version>4.5.12</httpclient.version>
+        <spring-boot.version>3.4.3</spring-boot.version>
+        <spring-boot-admin.version>3.4.5</spring-boot-admin.version>
+        <dubbo.version>3.3.4</dubbo.version>
+        <kotlin-stdlib.version>2.1.20</kotlin-stdlib.version>
+        <protobuf.version>4.30.1</protobuf.version>
+        <alibaba.ttl.version>2.12.6</alibaba.ttl.version>
+        <alibaba.fastjson.version>2.0.55</alibaba.fastjson.version>
+        <alibaba.druid.version>1.2.23</alibaba.druid.version>
+        <mybatis-plus.version>3.5.10.1</mybatis-plus.version>
+        <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
+        <p6spy.version>3.9.1</p6spy.version>
+        <redisson.version>3.36.0</redisson.version>
+        <caffeine.version>3.2.0</caffeine.version>
+        <protostuff.version>1.8.0</protostuff.version>
+        <apache.commons-text.version>1.13.0</apache.commons-text.version>
+        <hutool.version>5.8.36</hutool.version>
+        <guava.version>33.4.5-jre</guava.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <jsoup.version>1.19.1</jsoup.version>
+        <sa-token.version>1.41.0</sa-token.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <com.google.zxing.version>3.4.0</com.google.zxing.version>
-        <hutool.version>5.7.7</hutool.version>
-        <pdfbox.version>2.0.19</pdfbox.version>
-        <knife4j.version>3.0.2</knife4j.version>
-        <fastdfs-spring-boot-starter.version>0.2.0</fastdfs-spring-boot-starter.version>
-        <mybatis-plus.version>3.4.2</mybatis-plus.version>
-        <dynamic-datasource-spring-boot-starter.version>3.3.6</dynamic-datasource-spring-boot-starter.version>
-        <p6spy.version>3.9.1</p6spy.version>
-        <redisson.version>3.16.1</redisson.version>
-        <jsoup.version>1.14.1</jsoup.version>
-        <jjwt.version>0.9.0</jjwt.version>
-        <shiro.version>1.7.1</shiro.version>
-        <thymeleaf-layout-dialect.version>2.4.1</thymeleaf-layout-dialect.version>
-        <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>
+        <fastdfs.version>1.0.1-RELEASE</fastdfs.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
-        <velocity.version>2.2</velocity.version>
-
-        <hdw-common.version>3.1.0</hdw-common.version>
-        <hdw-api-base.version>3.1.0</hdw-api-base.version>
-        <hdw-api-notice.version>3.1.0</hdw-api-notice.version>
+        <velocity.version>2.4.1</velocity.version>
     </properties>
 
     <dependencyManagement>
@@ -74,16 +75,9 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -97,20 +91,18 @@
         </dependencies>
     </dependencyManagement>
 
-    <repositories>
-        <repository>
-            <id>alimaven</id>
-            <name>aliyun maven</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
-
     <profiles>
         <profile>
             <!-- 本地开发环境 -->
             <id>dev</id>
             <properties>
-                <profileActive>dev</profileActive>
+                <profile.active>dev</profile.active>
+                <nacos.host>127.0.0.1</nacos.host>
+                <nacos.port>8848</nacos.port>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <nacos.namespace>public</nacos.namespace>
+                <nacos.group>DEFAULT_GROUP</nacos.group>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -120,14 +112,26 @@
             <!-- 生产环境 -->
             <id>prod</id>
             <properties>
-                <profileActive>prod</profileActive>
+                <profile.active>prod</profile.active>
+                <nacos.host>127.0.0.1</nacos.host>
+                <nacos.port>8848</nacos.port>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <nacos.namespace>public</nacos.namespace>
+                <nacos.group>DEFAULT_GROUP</nacos.group>
             </properties>
         </profile>
         <profile>
             <!-- 测试环境 -->
             <id>test</id>
             <properties>
-                <profileActive>test</profileActive>
+                <profile.active>test</profile.active>
+                <nacos.host>127.0.0.1</nacos.host>
+                <nacos.port>8848</nacos.port>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+                <nacos.namespace>public</nacos.namespace>
+                <nacos.group>DEFAULT_GROUP</nacos.group>
             </properties>
         </profile>
     </profiles>
@@ -146,55 +150,157 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*</include>
-                    <include>application.yml</include>
-                    <include>application-${profileActive}.yml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
+            <!-- 编译插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <encoding>${maven.compiler.encoding}</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <!-- 资源插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
                 <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <!-- 后缀为pem、pfx的证书文件 -->
                     <nonFilteredFileExtensions>
-                        <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>xls</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>pem</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>map</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>pfx</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>p12</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>key</nonFilteredFileExtension>
                         <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>otf</nonFilteredFileExtension>
                         <nonFilteredFileExtension>svg</nonFilteredFileExtension>
                         <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
                         <nonFilteredFileExtension>woff</nonFilteredFileExtension>
                         <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>js</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>css</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>crt</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>dat</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>db</nonFilteredFileExtension>
-                        <nonFilteredFileExtension>xml</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jar</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
-                    <encoding>utf-8</encoding>
-                    <useDefaultDelimiters>true</useDefaultDelimiters>
                 </configuration>
             </plugin>
+            <!-- 生成源码包插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 生成文档插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
-                    <!--打包跳过测试-->
-                    <skipTests>true</skipTests>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <charset>${project.build.sourceEncoding}</charset>
+                    <docencoding>${project.build.sourceEncoding}</docencoding>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalJOption>-Xdoclint:none</additionalJOption>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 版本号管理插件 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    <pomElements>
+                        <dependencyManagement>expand</dependencyManagement>
+                        <pluginManagement>remove</pluginManagement>
+                        <dependencies>remove</dependencies>
+                        <properties>remove</properties>
+                        <repositories>remove</repositories>
+                    </pomElements>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
+    <repositories>
+        <repository>
+            <id>aliyunmaven</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyunmaven</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <distributionManagement>
+        <repository>
+            <id>aliyunmaven</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </distributionManagement>
 </project>
 
